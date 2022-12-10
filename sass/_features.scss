@@ -3,17 +3,34 @@
 
   margin: 15rem 0;
 
-  display: grid; //grid-item becomes also a grid container
-  // grid-template-columns: repeat(3, 1fr);
+  @supports (display: grid) {
+    display: grid; //grid-item becomes also a grid container
+    // grid-template-columns: repeat(3, 1fr);
 
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  grid-gap: 6rem;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    grid-gap: 6rem;
 
-  align-items: start;
+    align-items: start;
+  }
 }
 
 // closely related, thus put them in same file
 .feature {
+  // using progressive enhancement, build a page with the older CSS methods, pretending that new stuff like Flexbox and Grid doesn't even exist. And then on top of that, we build our layout with CSS Grid, if the browser supports it
+
+  //using floats instead of grid if browser doesn't support grids
+  float: left;
+  width: 33.3333%;
+  margin-bottom: 6rem;
+
+  // floats automatically get ignored by display:grid;
+  // What gets ignored by CSS Grid and Flexbox, are floats, display: inline-block, display: table-cell, and vertical-align
+  @supports (display: grid) {
+    // reset float properties
+    width: auto;
+    margin-bottom: 0;
+  }
+
   display: grid;
   grid-template-columns: min-content 1fr;
   row-gap: 1.5rem;
